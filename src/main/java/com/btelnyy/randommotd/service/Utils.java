@@ -14,6 +14,11 @@ public class Utils {
         return ChatColor.translateAlternateColorCodes('&', str);
     }
 
+    public static String specialColoured(String str)
+    {
+        return ChatColor.translateAlternateColorCodes('§', str);
+    }
+
     public static String colored(String str) {
         return coloured(str);
     }
