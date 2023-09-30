@@ -4,3 +4,5 @@ plugin_enabled: true
 # Mode 0: Per ping update, the server will generate a new MOTD each time a user requests it.
 # Mode 1: The server will generate a new MOTD every configured amount of time and return it instead.
 plugin_mode: 0
+# Amount of seconds between each MOTD update (if the above setting is set to 1)
+motd_update_delay_seconds: 5

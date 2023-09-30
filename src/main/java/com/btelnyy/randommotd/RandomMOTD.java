@@ -6,8 +6,10 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.btelnyy.randommotd.constants.ConfigData;
+import com.btelnyy.randommotd.constants.config.MotdConfig;
 import com.btelnyy.randommotd.constants.config.PluginConfig;
 import com.btelnyy.randommotd.listener.EventListener;
+import com.btelnyy.randommotd.service.MOTDUpdater;
 import com.btelnyy.randommotd.service.file_manager.Configuration;
 import com.btelnyy.randommotd.service.file_manager.FileID;
 import com.btelnyy.randommotd.service.file_manager.FileManager;
@@ -18,7 +20,7 @@ public class RandomMOTD extends JavaPlugin {
 
     // An instance of the plugin, so we don't need to make everything static
     private static RandomMOTD instance;
-    private static final Configuration language = RandomMOTD.getInstance().getFileManager().getFile(FileID.LANGUAGE).getConfiguration();
+    private static Configuration language;
     
     private Configuration config;
     private ConfigData configData;
@@ -26,14 +28,14 @@ public class RandomMOTD extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Self-explanatory
         instance = this;
-
         // Generate files
         fileManager = new FileManager(this);
         fileManager.addFile(FileID.LANGUAGE, fileManager.create(null, "language.yml"));
         fileManager.addFile(FileID.MOTD, fileManager.create(null, "motd.yml"));
 
+        language = RandomMOTD.getInstance().getFileManager().getFile(FileID.LANGUAGE).getConfiguration();
+        
         // Load config
         saveDefaultConfig();
         {
@@ -43,6 +45,8 @@ public class RandomMOTD extends JavaPlugin {
             // Cache it
             configData = new ConfigData();
             configData.load(config);
+            new PluginConfig().load(config);
+            new MotdConfig().load(getFileManager().getFile(FileID.MOTD).getConfiguration());
         }
 
         // Register commands
@@ -58,6 +62,10 @@ public class RandomMOTD extends JavaPlugin {
         {
             getLogger().info(language.get("plugin_disabled_message").toString());
             getPluginLoader().disablePlugin(instance);
+        }
+        if(PluginConfig.getInstance().pluginMode == 1)
+        {
+            getServer().getScheduler().runTaskTimer(instance, new MOTDUpdater(), 20, PluginConfig.getInstance().motdUpdateDelaySeconds * 20);
         }
     }
 

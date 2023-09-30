@@ -8,6 +8,7 @@ import org.bukkit.event.server.ServerListPingEvent;
 
 import com.btelnyy.randommotd.RandomMOTD;
 import com.btelnyy.randommotd.constants.config.MotdConfig;
+import com.btelnyy.randommotd.constants.config.PluginConfig;
 import com.btelnyy.randommotd.service.file_manager.Configuration;
 import com.btelnyy.randommotd.service.file_manager.FileID;
 
@@ -17,6 +18,13 @@ public class EventListener implements Listener
     
     @EventHandler
     public void onServerListPing(ServerListPingEvent ev)
+    {
+        if(PluginConfig.getInstance().pluginMode == 0){
+            modeOneHandle(ev);
+        }
+    }
+
+    private void modeOneHandle(ServerListPingEvent ev)
     {
         String currentMotd = ev.getMotd();
         Random rand = new Random();
