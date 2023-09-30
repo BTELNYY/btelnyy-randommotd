@@ -1,0 +1,6 @@
+# Should the plugin be enabled?
+plugin_enabled: true
+# MOTD Update Mode
+# Mode 0: Per ping update, the server will generate a new MOTD each time a user requests it.
+# Mode 1: The server will generate a new MOTD every configured amount of time and return it instead.
+plugin_mode: 0

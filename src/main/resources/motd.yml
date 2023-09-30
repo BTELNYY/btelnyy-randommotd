@@ -1,0 +1,7 @@
+# Place this string into your server.properties so that the plugin may only replace the text you want to replace.
+replace_text_trigger: "{btelyy.randommotd.replacetext}"
+# List of MOTDs
+motd:
+  - "Test MOTD!"
+  - "Test MOTD 2!"
+  - "Test MOTD 3!"
